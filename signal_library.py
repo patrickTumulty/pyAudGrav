@@ -1,11 +1,9 @@
 from scipy.io.wavfile import read, write
 import matplotlib.pyplot as plt
 import numpy as np
-
-# audioFile = "stimmen_excerpt_patrick_before.wav"
-audioFile = "Peak3_16bit.wav"
-
-
+import time
+audioFile = "stimmen_excerpt_patrick_before.wav"
+# audioFile = "Peak3.wav"
 
 
 
@@ -13,31 +11,15 @@ class Signal:
     def __init__(self, sampleRate=44100):
         self.sampleRate = sampleRate
 
-    def plotWave(self):
-        plt.plot(self.data, ".")
-        plt.xlabel("Time: samples")
-        plt.ylabel("Amplitude")
-        plt.show()
-
-    def Count_Peaks(self, thresh):
-        count = 0
-        peak = True
-        for i in range(len(self.data)):
-            if peak:
-                if self.data[i] > thresh:
-                    count += 1
-                    peak = False
-                elif self.data[i] < (thresh * -1):
-                    count += 1
-                    peak = False
-            elif self.data[i] < thresh and self.data[i] > (thresh * -1):
-                peak = True
-        print(count)
-        self.peakCount = count 
-
 
 class SinWave(Signal):
     def __init__(self, f, d):
+        """
+        Create SinWave 
+        f - Frequency in Hertz 
+        d - Duraction in Seconds 
+
+        """
         Signal.__init__(self)
         self.frequency = f
         self.duration = d
@@ -52,6 +34,12 @@ class SinWave(Signal):
 
 class CosWave(Signal):
     def __init__(self, f, d):
+        """
+        Create SinWave 
+        f - Frequency in Hertz 
+        d - Duraction in Seconds 
+        
+        """
         Signal.__init__(self)
         self.frequency = f
         self.duration = d
@@ -69,12 +57,16 @@ class WavFile(Signal):
         Signal.__init__(self)
         self.fileName = fileName
         self.data = self.readWav()
-        
+    
     def readWav(self):
         wav = read(self.fileName)
+        self.sampleRate = wav[0]
         return wav[1]
 
     def normalize(self):
+        """
+        Normalize an array to values between 1 and -1
+        """
         if (np.abs(np.max(self.data)) > np.abs(np.min(self.data))):
             norm = (1 / np.abs(np.max(self.data))) * self.data
             self.data = norm
@@ -84,7 +76,6 @@ class WavFile(Signal):
 
 
 def Windowing(data):
-    val = np.array([])
     window = np.array([])
     counter = 0
     total = 0
@@ -94,30 +85,142 @@ def Windowing(data):
             t = np.sum(np.abs(window)) / 10
             if t < 0.001:
                 t = 0
-            val = np.append(val, t)
             print(total, ":", t)
             counter += 1
         else:
             window = np.array([])
             counter = 0
             total += 1
-    plt.plot(val)
-    plt.show()
 
 
+def RemoveNoiseFloor(data): 
+    """
+    Function needs work.
 
+    Currently removes noise floor, but also removes values from 
+    the audio signal that we want to keep. 
+    """
+    for i in range(len(data)):
+        if abs(data[i]) < 0.001:
+            if data[i] <= 0:
+                data[i] = data[i] + abs(data[i])
+            else:
+                data[i] = data[i] - data[i]
+        else:
+            pass
+    return data
+
+
+def _peakToEnd(data, idx):
+    maxIdx = idx
+    signal = np.array([])
+    for i in range((len(data) - maxIdx)-5):
+        rollingAvg = (sum(abs(data[i + maxIdx : i + maxIdx + 5])) / 5)
+        if rollingAvg > 0.001:
+            signal = np.append(signal, data[i + maxIdx])
+        else:
+            print("End :", i + maxIdx)
+            break
+    return signal
+
+def _peakToBeginning(data, startingIdx):
+    maxIdx = startingIdx
+    signal = np.array([])
+    for i in range((len(data[0:maxIdx])-5)):
+        idx = maxIdx - i
+        rollingAvg = (sum(abs(data[idx - 5:idx])) / 5)
+        if rollingAvg > 0.001:
+            signal = np.append(signal, data[idx])
+        else:
+            print("Beginning: ", idx )
+            break
+    return signal, idx
+
+def _peak(data, i):
+    toEnd = _peakToEnd(data, i)
+    p, idx = _peakToBeginning(data, i)
+    toBeginning = np.flip(p)
+    toBeginning = np.append(toBeginning ,toEnd)
+    return toBeginning, idx
+
+
+def _removePeak(mainData, peakData, startingIdx):
+    for i in range(len(peakData)):
+        mainData[i + startingIdx] *= 0
+    return mainData
+
+
+def GrabPeaks(audioData, thresh = 0.5):
+    """
+    Takes a wav data array containing peak events separated by 
+    silence and returns a list containing individual arrays for 
+    each peak event.
+    
+    wavData:
+    Normalized (values between -1 and 1) wav array.
+    Note: Currently doesn't support tuples
+
+    thresh:
+    Value above which a peak will be detected. Any value below
+    will not be considered a peak.
+
+    """
+    events = []
+    eventNum = 0
+    while (True):
+        peakIdx = np.argmax(audioData)
+        if (audioData[peakIdx] > thresh):
+            p, idx = _peak(audioData, peakIdx)
+            events.append(p)
+            audioData = _removePeak(audioData, events[eventNum], idx)
+            eventNum += 1
+        else:
+            break
+    return events
+
+        
+def WriteWaves(events, fileName, sampleRate = 44100):
+    """
+    WriteWaves takes a list of arrays containing audio events and 
+    writes them sequentially to your locally directory as a wav file
+    with a given prefix file name. 
+
+    events: 
+    A list of arrays containing audio signals 
+
+    fileName:
+    A string with the desired fileName. Numbers will be added to 
+    delineate different events in your file explorer.  
+
+    """
+    for i in range(len(events)):
+        preFix = "{}_{}.wav".format(fileName, (i + 1))
+        # preFix = fileName + "_" + str(i + 1) + ".wav"
+        write(preFix, sampleRate, events[i])
+    print("Done")
 
 a = WavFile(audioFile)
-a.normalize()
-Windowing(a.data)
+# a.normalize()
+print(a.data[0])
+# b = GrabPeaks(a.data)
+# plt.plot(a.data)
+# plt.show()
+# # print(len(b))
 
-print(np.max(a.data))
-print(np.min(a.data))
+# WriteWaves(b, "PT_Events")
 
 
 
 
-# Windowing(a.data)
+
+
+
+
+
+
+
+
+
 
         
 
