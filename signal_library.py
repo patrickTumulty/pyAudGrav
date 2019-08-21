@@ -2,6 +2,7 @@ from scipy.io.wavfile import read, write
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+
 audioFile = "stimmen_excerpt_patrick_before.wav"
 # audioFile = "Peak3.wav"
 
@@ -199,9 +200,9 @@ def WriteWaves(events, fileName, sampleRate = 44100):
         write(preFix, sampleRate, events[i])
     print("Done")
 
-a = WavFile(audioFile)
-# a.normalize()
-print(a.data[0])
+# a = WavFile(audioFile)
+# # a.normalize()
+# print(a.data[0])
 # b = GrabPeaks(a.data)
 # plt.plot(a.data)
 # plt.show()
