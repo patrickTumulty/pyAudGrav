@@ -200,15 +200,6 @@ def WriteWaves(events, fileName, sampleRate = 44100):
         write(preFix, sampleRate, events[i])
     print("Done")
 
-# a = WavFile(audioFile)
-# # a.normalize()
-# print(a.data[0])
-# b = GrabPeaks(a.data)
-# plt.plot(a.data)
-# plt.show()
-# # print(len(b))
-
-# WriteWaves(b, "PT_Events")
 
 
 

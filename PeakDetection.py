@@ -1,7 +1,7 @@
 import numpy as np
 import signal_library as sl
 
-audio = sl.WavFile("Peak1.wav")
+audio = sl.WavFile("Peak3.wav")
 audio.normalize()
 
 
@@ -32,20 +32,40 @@ val3 = find_all_peaks([x[1] for x in val2])
 
 
 
-g = compare(val, val2)
-g2 = compare(val, val3)
+# g = compare(val, val2)
+# g2 = compare(val, val3)
 
-x_val = [x[0] for x in val]
-y_val = [x[1] for x in val]
+# x_val = [x[0] for x in val]
+# y_val = [x[1] for x in val]
 
-x_val2 = [x[0] for x in g]
-y_val2 = [x[1] for x in g]
+# x_val2 = [x[0] for x in g]
+# y_val2 = [x[1] for x in g]
 
-x_val3 = [x[0] for x in g2]
-y_val3 = [x[1] for x in g2]
+# x_val3 = [x[0] for x in g2]
+# y_val3 = [x[1] for x in g2]
 
-sl.plt.plot(audio.data)
-sl.plt.plot(x_val, y_val)
-sl.plt.plot(x_val2, y_val2)
-sl.plt.plot(x_val3, y_val3, ".")
+# sl.plt.plot(audio.data)
+# sl.plt.plot(x_val, y_val)
+# sl.plt.plot(x_val2, y_val2)
+# sl.plt.plot(x_val3, y_val3, ".")
+# sl.plt.show()
+
+
+def find_events(data):
+    event = np.array([])
+    once = True
+    for i in range(len(data)-100):
+        rolling_avg = sum(abs(data[i:i+100])) * 0.01
+        if rolling_avg < 0.001:
+            event = np.append(event, 0)
+        else:
+            event = np.append(event, data[i])
+    return event
+
+h = find_events(audio.data)
+for i in h:
+    print(i)
+
+sl.plt.plot(h)
 sl.plt.show()
+
