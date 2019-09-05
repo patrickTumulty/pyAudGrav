@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 
-audioFile = "stimmen_excerpt_patrick_before.wav"
-# audioFile = "Peak3.wav"
+# audioFile = "stimmen_excerpt_patrick_before.wav"
+audioFile = "Peak3.wav"
 
 
 
@@ -58,6 +58,8 @@ class WavFile(Signal):
         Signal.__init__(self)
         self.fileName = fileName
         self.data = self.readWav()
+        self.L_data = None
+        self.R_data = None
     
     def readWav(self):
         wav = read(self.fileName)
@@ -74,6 +76,16 @@ class WavFile(Signal):
         else:
             norm = (1 / np.abs(np.min(self.data))) * self.data
             self.data = norm
+        
+    def stereo_to_mono(self):
+        """
+        Takes a stereo audio signal and splits it into two mono numpy arrays
+        """
+        if len(self.data[0]) == 2:
+            self.L_data = np.array([L for L, R in self.data])
+            self.R_data = np.array([R for L, R in self.data])
+        else:
+            print("Signal is Mono!")
 
 
 def Windowing(data):
@@ -202,7 +214,12 @@ def WriteWaves(events, fileName, sampleRate = 44100):
 
 
 
+# a = WavFile(audioFile)
+# a.normalize()
+# # a.stereo_to_mono()
 
+# e = GrabPeaks(a.data, 0.3)
+# WriteWaves(e, 'peak_edited')
 
 
 
