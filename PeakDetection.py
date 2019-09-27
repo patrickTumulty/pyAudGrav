@@ -32,23 +32,23 @@ val3 = find_all_peaks([x[1] for x in val2])
 
 
 
-# g = compare(val, val2)
-# g2 = compare(val, val3)
+g = compare(val, val2)
+g2 = compare(val, val3)
 
-# x_val = [x[0] for x in val]
-# y_val = [x[1] for x in val]
+x_val = [x[0] for x in val]
+y_val = [x[1] for x in val]
 
-# x_val2 = [x[0] for x in g]
-# y_val2 = [x[1] for x in g]
+x_val2 = [x[0] for x in g]
+y_val2 = [x[1] for x in g]
 
-# x_val3 = [x[0] for x in g2]
-# y_val3 = [x[1] for x in g2]
+x_val3 = [x[0] for x in g2]
+y_val3 = [x[1] for x in g2]
 
-# sl.plt.plot(audio.data)
-# sl.plt.plot(x_val, y_val)
-# sl.plt.plot(x_val2, y_val2)
-# sl.plt.plot(x_val3, y_val3, ".")
-# sl.plt.show()
+sl.plt.plot(audio.data)
+sl.plt.plot(x_val, y_val)
+sl.plt.plot(x_val2, y_val2)
+sl.plt.plot(x_val3, y_val3, ".")
+sl.plt.show()
 
 
 def find_events(data):
@@ -66,6 +66,6 @@ h = find_events(audio.data)
 for i in h:
     print(i)
 
-sl.plt.plot(h)
-sl.plt.show()
+# sl.plt.plot(h)
+# sl.plt.show()
 
