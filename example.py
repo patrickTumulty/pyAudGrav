@@ -50,8 +50,6 @@ length = len(sig.data) # get length of original audio signal
 r = sl.Reconstruct().new_stereo(length) # create a stereo array of zeros with the length of the original data
 r = sl.Reconstruct().reconstruct_stereo(r, sig.audio_events) # add the shifted audio events to the new array
 
-r = sl.Reconstruct().new_mono(length)
-r = sl.Reconstruct().reconstruct_mono(r, sig.audio_events)
 #       Note: To output a mono file instead of a stereo file simply change 
 #       new_stereo and reconstruct_stereo to new_mono and reconstruct_mono
 # ==== WRITE TO A NEW WAVFILE ====================================================
