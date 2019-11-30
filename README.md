@@ -1,15 +1,17 @@
 # pyAudGrav
 
-audGrav is a compositional tool, implemented in python, that allows a user to algorithmically edit and rearrange audio clips, both in time and space, using the equation of gravity. 
+pyAudGrav is a compositional tool, implemented in python, that allows a user to algorithmically edit and rearrange audio clips, both in time and space, using the equation of gravity. 
 
 After the audio file is read, the program, with user-defined attack and release thresholds, will edit out each audio event and treat it as an independent body. An audio event, in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. The equation of gravity is used to create a relationship between each audio event based on its mass and distance from other events. For our purposes, mass is equated as the RMS value of each event and the distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity, we would multiply the equation by the gravitational constant, 9.81 meters per seconds squared, but since audio has no gravitational constant this parameter is exposed to the user to change and affect how dramatic the shifting is. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
 
 # Installation
 
 
+`pip install git+https://github.com/patrickTumulty/pyAudGrav`
+
 ## Example Code:
 
-Example of general usecase of AudGrav. Pyplots are written in to illustrate the different steps in the editing and reconstructing process. Simply copy and past this code to get up and running quickly with AudGrav. 
+Example of general usecase of pyAudGrav. Pyplots are written in to illustrate the different steps in the editing and reconstructing process. Simply copy and past this code to get up and running quickly with pyAudGrav. Above in the foldered titled **Examples** are the python files that appear below along with some audio examples that you can use to test out pyAudGrav.   
 
 ```
 import pyAudGrav 
@@ -94,7 +96,7 @@ plt.show()
 
 ## Other Usage:
 
-AudGrav has a built in function called `loop_gravity()` that allows the user to iterate over the same data set multiple times. This approach yields interesting and different results to that of the example above. 
+pyAudGrav has a built in function called `loop_gravity()` that allows the user to iterate over the same data set multiple times. This approach yields interesting and different results to that of the example above. 
 
 ```
 import pyAudGrav
