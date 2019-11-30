@@ -13,8 +13,14 @@ class AudioIO:
         """
         self.file_name = fileName
         self.data = self.readWav()
+        length_seconds = round(self.data / self.sample_rate, 2)
         if len(self.data.shape) == 2:
             raise Exception ("Imported audio file should be mono, not stereo.")
+        if len(self.data.shape) == 2:
+            channels = 'stereo'
+        else:
+            channels = 'mono'
+        print("Loaded {} | Sample Rate : {} | Channels : {} | Length : {}s".format(self.file_name, self.sample_rate, channels, length_seconds))
 
     def readWav(self):
         """
@@ -24,11 +30,6 @@ class AudioIO:
         """
         wav = sf.read(self.file_name)
         self.sample_rate = wav[1]
-        if len(wav[0].shape) == 2:
-            channels = 'stereo'
-        else:
-            channels = 'mono'
-        print("Loaded {} | Sample Rate : {} | Channels : {}".format(self.file_name, self.sample_rate, channels))
         return wav[0]
 
     def writeWav(self, fileName, signal):
@@ -47,5 +48,6 @@ class AudioIO:
             channels = 'stereo'
         else:
             channels = 'mono'
-        print("Writing {} | Sample Rate : {} | Channels : {}".format(fileName, self.sample_rate, channels))
+        length_seconds = round(len(signal) / self.sample_rate, 2)
+        print("Writing {} | Sample Rate : {} | Channels : {} | Length : {}s".format(fileName, self.sample_rate, channels, length_seconds))
         sf.write(fileName, signal, self.sample_rate)
