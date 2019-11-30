@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pyAudGrav", # Replace with your own username
-    version="0.0.1",
+    name="pyAudGrav",
+    version="0.1.0",
     author="Patrick Tumulty",
     author_email="ptumulty1@gmail.com",
     description="Algorithmically edit and rearrange audio clips, both in time and space, using the equation of gravity.",
