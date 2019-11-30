@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 
 # ==== IMPORT AUDIO ==============================================================
 
-audio_file = "pt_example1_v3_norm.wav"
+audio_file = "example1_voice.wav"
+# audio_file = "example2_tones.wav"
 
 io = AudGrav.AudioIO(audio_file)
 
@@ -56,7 +57,7 @@ r = R.reconstruct_stereo()
 
 new_file = "NewWavFile.wav" # write your new audio file to the current working directory. 
 
-io.writeWav(new_file, r) # comment out this line if you don't want this script to write a new file
+# io.writeWav(new_file, r) # comment out this line if you don't want this script to write a new file
 
 # ==== PLOT NEW SIGNAL ===========================================================
 #       This plot allows you to see the timeline of your new signal overlayed with your original audio 
