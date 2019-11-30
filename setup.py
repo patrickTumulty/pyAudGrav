@@ -12,10 +12,16 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/patrickTumulty/audGrav",
-    packages=setuptools.find_packages(),
+    packages=['pyAudGrav'],
+    install_requires = ['numpy>=1.16.4',
+                        'scipy>=1.3.0',
+                        'SoundFile>=0.10.2',
+                        'matplotlib>=3.1.0',
+                        'pyloudnorm>=0.1.0'
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.7.3',

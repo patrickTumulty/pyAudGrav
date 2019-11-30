@@ -1,10 +1,10 @@
 
-import AudGrav
+import pyAudGrav
 
-audio_file = "Peak3.wav"
+audio_file = "example1_voice.wav"
 
-io = AudGrav.AudioIO(audio_file)
-sig = AudGrav.AudioAnalysis(io.data, io.sample_rate)
+io = pyAudGrav.AudioIO(audio_file)
+sig = pyAudGrav.AudioAnalysis(io.data, io.sample_rate)
 
 env = sig.get_env_peak(sig.data)
 

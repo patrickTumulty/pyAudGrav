@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
-from AudGrav.AudioEvent import AudioEvent
-from AudGrav.AudioReconstruct import AudioReconstruct
+from pyAudGrav.AudioEvent import AudioEvent
+from pyAudGrav.AudioReconstruct import AudioReconstruct
 import pyloudnorm as pyln
 
 

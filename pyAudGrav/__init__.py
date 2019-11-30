@@ -1,5 +1,5 @@
-from AudGrav.AudioAnalysis import AudioAnalysis
-from AudGrav.AudioEvent import AudioEvent
-from AudGrav.AudioReconstruct import AudioReconstruct
-from AudGrav.AudioIO import AudioIO
+from pyAudGrav.AudioAnalysis import AudioAnalysis
+from pyAudGrav.AudioEvent import AudioEvent
+from pyAudGrav.AudioReconstruct import AudioReconstruct
+from pyAudGrav.AudioIO import AudioIO
 

@@ -1,4 +1,4 @@
-import AudGrav 
+import pyAudGrav 
 import matplotlib.pyplot as plt 
 
 # ==== IMPORT AUDIO ==============================================================
@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 audio_file = "example1_voice.wav"
 # audio_file = "example2_tones.wav"
 
-io = AudGrav.AudioIO(audio_file)
+io = pyAudGrav.AudioIO(audio_file)
 
-sig = AudGrav.AudioAnalysis(io.data, io.sample_rate) 
+sig = pyAudGrav.AudioAnalysis(io.data, io.sample_rate) 
 
 sig.data = sig.normalize(sig.data, 1) # peak normalize audio data (Note: This step is optional)
 
@@ -48,7 +48,7 @@ sig.calc_shift(sig.data, env, atk_thresh, rel_thresh, gConst, panRatio, panThres
 
 length = len(sig.data) # get length of original audio signal
 
-R = AudGrav.AudioReconstruct(length, sig.audio_events)
+R = pyAudGrav.AudioReconstruct(length, sig.audio_events)
 r = R.reconstruct_stereo()
 
 #       Note: To output a mono file instead of a stereo file simply change 
