@@ -1,4 +1,4 @@
-# AudGrav
+# pyAudGrav
 
 audGrav is a compositional tool, implemented in python, that allows a user to algorithmically edit and rearrange audio clips, both in time and space, using the equation of gravity. 
 
@@ -12,16 +12,16 @@ After the audio file is read, the program, with user-defined attack and release 
 Example of general usecase of AudGrav. Pyplots are written in to illustrate the different steps in the editing and reconstructing process. Simply copy and past this code to get up and running quickly with AudGrav. 
 
 ```
-import AudGrav 
+import pyAudGrav 
 import matplotlib.pyplot as plt 
 
 # ==== IMPORT AUDIO ==============================================================
 
 audio_file = "example.wav" # change this to whatever file you want to import 
 
-io = AudGrav.AudioIO(audio_file)
+io = pyAudGrav.AudioIO(audio_file)
 
-sig = AudGrav.AudioAnalysis(io.data, io.sample_rate) 
+sig = pyAudGrav.AudioAnalysis(io.data, io.sample_rate) 
 
 sig.data = sig.normalize(sig.data, 1) # peak normalize audio data (Note: This step is optional)
 
@@ -61,7 +61,7 @@ sig.calc_shift(sig.data, env, atk_thresh, rel_thresh, gConst, panRatio, panThres
 
 length = len(sig.data) # get length of original audio signal
 
-R = AudGrav.AudioReconstruct(length, sig.audio_events)
+R = pyAudGrav.AudioReconstruct(length, sig.audio_events)
 r = R.reconstruct_stereo()
 
 #       Note: To output a mono file instead of a stereo file simply change 
@@ -97,12 +97,12 @@ plt.show()
 AudGrav has a built in function called `loop_gravity()` that allows the user to iterate over the same data set multiple times. This approach yields interesting and different results to that of the example above. 
 
 ```
-import AudGrav
+import pyAudGrav
 
 audio_file = "Example.wav"
 
-io = AudGrav.AudioIO(audio_file)
-sig = AudGrav.AudioAnalysis(io.data, io.sample_rate)
+io = pyAudGrav.AudioIO(audio_file)
+sig = pyAudGrav.AudioAnalysis(io.data, io.sample_rate)
 
 env = sig.get_env_peak(sig.data)
 
