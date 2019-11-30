@@ -1,4 +1,4 @@
-# AudGrav
+# pyAudGrav
 
 audGrav is a compositional tool, implemented in python, that allows a user to algorithmically edit and rearrange audio clips, both in time and space, using the equation of gravity. 
 
