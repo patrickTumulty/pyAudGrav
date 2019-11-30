@@ -1,7 +1,7 @@
 
 import AudGrav
 
-audio_file = "Example.wav"
+audio_file = "Peak3.wav"
 
 io = AudGrav.AudioIO(audio_file)
 sig = AudGrav.AudioAnalysis(io.data, io.sample_rate)
@@ -18,4 +18,4 @@ plot = False        # plot each iteration
 
 r = sig.loop_gravity(sig.data, env, attack, release, number_of_loops, gConst, panRatio, panThresh, plot)
 
-io.writeWav("NewFile.wav", r)
+# io.writeWav("NewFile.wav", r)
