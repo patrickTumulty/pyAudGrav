@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="afect", # Replace with your own username
+    name="pyAudGrav", # Replace with your own username
     version="0.0.1",
     author="Patrick Tumulty",
     author_email="ptumulty1@gmail.com",
-    description="Automatic time shift and stereo spatialization for plosive audio events.",
+    description="Algorithmically edit and rearrange audio clips, both in time and space, using the equation of gravity.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/patrickTumulty/audGrav",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
