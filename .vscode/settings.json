@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "venv/bin/python",
+    "python.pythonPath": "/anaconda3/bin/python",
     "git.ignoreLimitWarning": true
 }
