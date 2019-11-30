@@ -13,7 +13,7 @@ class AudioIO:
         """
         self.file_name = fileName
         self.data = self.readWav()
-        length_seconds = round(self.data / self.sample_rate, 2)
+        length_seconds = round(len(self.data) / self.sample_rate, 2)
         if len(self.data.shape) == 2:
             raise Exception ("Imported audio file should be mono, not stereo.")
         if len(self.data.shape) == 2:
