@@ -55,33 +55,37 @@ plt.plot([obj.peakIdx + obj.offset + rStruct.correction for obj in analyzer.audi
          [obj.panOffset * 0.01 for obj in analyzer.audio_events], 
          '.b')
 plt.show()
+
+# calc_shift.py 
 ```
 
-To use your own audio file simply change 'io = pyAudGrav.load_example1' with 'io = pyAudGrav.AudioIO(/filePath)`. 
-
-## Other Usage:
+To use your own audio file simply change 'io = pyAudGrav.load_example1()' with 'io = pyAudGrav.AudioIO(/filePath)`. 
 
 pyAudGrav has a built in function called `loop_gravity()` that allows the user to iterate over the same data set multiple times. This approach yields interesting and different results to that of the example above. 
 
 ```
 import pyAudGrav
+import matplotlib.pyplot as plt
 
-audio_file = "Example.wav"
+io = pyAudGrav.load_example1()
 
-io = pyAudGrav.AudioIO(audio_file)
-sig = pyAudGrav.AudioAnalysis(io.data, io.sample_rate)
+analyzer = pyAudGrav.AudioAnalysis(io.data, io.sample_rate)
 
-env = sig.get_env_peak(sig.data)
+env = analyzer.get_env_peak(analyzer.data)
 
-gConst = 4          # gravitational constant
-number_of_loops = 4 # number of times you want to loop over the data
-attack = 0.1        # attack threshold
-release = 0.001     # release threshold
-panRatio = 5
-panThresh = 30
-plot = False        # plot each iteration
+new_signal = analyzer.loop_gravity(analyzer.data, env, numLoops=4, plot=False)
 
-r = sig.loop_gravity(sig.data, env, attack, release, number_of_loops, gConst, panRatio, panThresh, plot)
+io.writeWav("Example1_after.wav", r)
 
-io.writeWav("NewFile.wav", r)
+plt.plot([i + analyzer.rStruct.correction for i in range(len(analyzer.data))],
+         [item for item in analyzer.data],
+         'grey')
+plt.plot(new_signal,
+         'red')
+plt.plot([item.peakIdx + item.offset + analyzer.rStruct.correction for item in analyzer.audio_events],
+         [item.panOffset * 0.01 for item in analyzer.audio_events],
+         '.blue')
+plt.show()
+
+# loop_gravity.py 
 ```

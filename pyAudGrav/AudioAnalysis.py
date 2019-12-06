@@ -382,7 +382,7 @@ class AudioAnalysis:
             rms_array[j] = 0
         return rms_array
 
-    def loop_gravity(self, data, env, atkThresh, relThresh, numLoops=2, gConst=1, panRatio=2, panThresh=50, magnitudeScale='RMS', plot=False):
+    def loop_gravity(self, data, env, atkThresh=0.03, relThresh=0.004, numLoops=4, gConst=4, panRatio=5, panThresh=30, magnitudeScale='RMS', plot=False):
         """
         Loop over the same audio data multiple times and return the final iteration. 
         
