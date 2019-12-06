@@ -218,7 +218,7 @@ class AudioAnalysis:
         return matrix
     
 
-    def calc_shift(self, data, env, atkThresh, relThresh, gConst=1, panRatio=2, panThresh=50, magnitudeScale='RMS', retOption=False):
+    def calc_shift(self, data, env, atkThresh=0.03, relThresh=0.004, gConst=4, panRatio=5, panThresh=30, magnitudeScale='RMS'):
         """
         Calculates the number of samples that each audio_event element will be shifted. 
 
@@ -247,9 +247,6 @@ class AudioAnalysis:
 
         magnitudeScale : string
             Define what measure of mass is used to calculate shifting. ('RMS' or 'LUFS')
-        
-        retOption : boolean
-            Set if the method will return an array of shift amounts. 
         """
         if len(self.audio_events) == 0:
             self.get_audio_events(data, env, atkThresh, relThresh)
@@ -277,8 +274,7 @@ class AudioAnalysis:
         self.panValues = self.normalize(c, 100)
         self._apply_pan_offset(self.panValues.astype(int))
         self._apply_shift(shift_amount)
-        if retOption == True:
-            return shift_amount 
+
 
     def compress_pan(self, panValues, compRatio, thresh): 
         """
@@ -424,8 +420,8 @@ class AudioAnalysis:
         """
         print("Loop 1")
         self.calc_shift(data, env, atkThresh, relThresh, gConst, panRatio, panThresh, magnitudeScale)
-        R = AudioReconstruct(len(self.data), self.audio_events)
-        rM = R.reconstruct_mono()
+        self.rStruct = AudioReconstruct(len(self.data), self.audio_events)
+        rM = self.rStruct.reconstruct_mono()
         if plot:
             self.simple_plot(rM)
         if numLoops > 2:
@@ -433,15 +429,15 @@ class AudioAnalysis:
                 print("Loop {}".format(i + 2))
                 env = self.get_env_peak(rM)
                 self.calc_shift(rM, env, atkThresh, relThresh, gConst, panRatio, panThresh, magnitudeScale)
-                R = AudioReconstruct(len(rM), self.audio_events)
-                rM = R.reconstruct_mono()
+                self.rStruct = AudioReconstruct(len(rM), self.audio_events)
+                rM = self.rStruct.reconstruct_mono()
                 if plot:
                     self.simple_plot(rM)
         print("Loop {}".format(numLoops))
         env = self.get_env_peak(rM)
         self.calc_shift(rM, env, atkThresh, relThresh, gConst, panRatio, panThresh, magnitudeScale)
-        R = AudioReconstruct(len(rM), self.audio_events)
-        rS = R.reconstruct_stereo()
+        self.rStruct = AudioReconstruct(len(rM), self.audio_events)
+        rS = self.rStruct.reconstruct_stereo()
         if plot:
             self.simple_plot(rS)      
         return rS
