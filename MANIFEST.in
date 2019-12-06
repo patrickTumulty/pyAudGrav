@@ -1,1 +1,2 @@
-include pyAudGrav/AudioExamples/Peak3.wav
+include pyAudGrav/AudioExamples/*.wav
+
