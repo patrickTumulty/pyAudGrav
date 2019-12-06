@@ -216,7 +216,6 @@ class AudioAnalysis:
                 for j in range(i):
                     matrix[i][j] *= -1
         return matrix
-
     
 
     def calc_shift(self, data, env, atkThresh, relThresh, gConst=1, panRatio=2, panThresh=50, magnitudeScale='RMS', retOption=False):
@@ -297,7 +296,7 @@ class AudioAnalysis:
             Threshold (0 <= val <= 100)
         """
         for i in range(len(panValues)):
-            if np.abs(panValues[i]) > thresh:
+            if panValues[i] > thresh or panValues[i] < -thresh:
                 panValues[i] *= (1 / compRatio)
         return panValues
 
