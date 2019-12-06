@@ -2,7 +2,7 @@
 from pyAudGrav.AudioIO import AudioIO
 from distutils.sysconfig import get_python_lib
 
-audio_file_path = get_python_lib() + "/pyAudGrav/AudioExamples/"
+audio_file_path = get_python_lib() + "/pyAudGrav/audio_files/"
 
 def load_example1():
     """
