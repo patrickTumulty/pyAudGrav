@@ -169,6 +169,6 @@ def loop_gravity(self, data, env, atkThresh=0.03, relThresh=0.004, numLoops=4, g
         Plot each iteration. (Default = False)
     """
 ```
-=======
 
->>>>>>> 8c59c4a3e82674ab377571bd25857377ff6086ef
+
+
