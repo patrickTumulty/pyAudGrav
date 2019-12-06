@@ -4,7 +4,7 @@ pyAudGrav is a compositional tool, implemented in python, that allows a user to 
 
 After the audio file is read, the program, with user-defined attack and release thresholds, will edit out each audio event and treat it as an independent body. An audio event, in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. The equation of gravity is used to create a relationship between each audio event based on its mass and distance from other events. For our purposes, mass is equated as the RMS value of each event and the distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity, we would multiply the equation by the gravitational constant, 9.81 meters per seconds squared, but since audio has no gravitational constant this parameter is exposed to the user to affect the magnitude of shifting. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
 
-# Installation
+## Installation
 
 
 `pip install git+https://github.com/patrickTumulty/pyAudGrav`
@@ -88,4 +88,82 @@ plt.plot([item.peakIdx + item.offset + analyzer.rStruct.correction for item in a
 plt.show()
 
 # loop_gravity.py 
+```
+
+The code above illustrates the minimum code required to create a new audio file. Examination of the `calc_shift()` and `loop_gravity()` functions will reveal some of the other parameters available to fine tune the pyAudGrav algorithm. 
+
+### `calc_shift()`
+
+```
+def calc_shift(self, data, env, atkThresh=0.03, relThresh=0.004, gConst=4, panRatio=5, panThresh=30, magnitudeScale='RMS'):
+    """
+    Calculates the number of samples that each audio_event element will be shifted. 
+
+    Parameters:
+
+    data : 1D numpy array
+        Audio Data
+
+    env : 1D Numpy Array
+        Audio Data Envelope.
+
+    atkThresh : float
+        Amplitude value for attack threshold (0 < val <= 1).
+
+    relThresh : float
+        Amplitude value for release threshold (0 < val <= 1).
+
+    gConst : int or float
+        Gravitational constant (Default = 1).
+
+    panRatio : int
+        Compression ratio for panning values.
+        
+    panThresh : int
+        Pan compression threshold. (pan values will be normalized after compression)
+
+    magnitudeScale : string
+        Define what measure of mass is used to calculate shifting. ('RMS' or 'LUFS')
+    """
+```
+
+### `loop_gravity()`
+
+```
+def loop_gravity(self, data, env, atkThresh=0.03, relThresh=0.004, numLoops=4, gConst=4, panRatio=5, panThresh=30, magnitudeScale='RMS', plot=False):
+    """
+    Loop over the same audio data multiple times and return the final iteration. 
+    
+    Parameters:
+
+    data : 1D numpy array
+        Audio Data
+
+    env : 1D Numpy Array
+        Audio Data Envelope.
+
+    atkThresh : float
+        Amplitude value for attack threshold (0 < val <= 1).
+
+    relThresh : float
+        Amplitude value for release threshold (0 < val <= 1).
+
+    numLoops : int 
+        Number of times to iterate over the data. (Note: numLoops can't be less than 2)
+
+    gConst : int or float
+        Gravitational constant (Default = 4).
+
+    panRatio : int
+        Compression ratio for panning values.
+        
+    panThresh : int
+        Pan compression threshold. (pan values will be normalized after compression)
+
+    magnitudeScale : string
+        Define what measure of mass is used to calculate shifting. ('RMS' or 'LUFS')
+        
+    plot : boolean
+        Plot each iteration. (Default = False)
+    """
 ```
