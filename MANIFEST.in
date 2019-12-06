@@ -1,2 +1,2 @@
-include pyAudGrav/AudioExamples/*.wav
+include pyAudGrav/audio_files/*.wav
 
