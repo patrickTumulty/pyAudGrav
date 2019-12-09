@@ -94,7 +94,7 @@ plt.show()
 
 The code above illustrates the minimum code required to create a new audio file. Examination of the `calc_shift()` and `loop_gravity()` functions will reveal some of the other parameters available to fine tune the pyAudGrav algorithm. For best results the user is encouraged to experiment with these parameters.
 
-Some general advice for fine tuning these parameters. Create a simple plot of generated envelope over the original data. This should provide usefull insight into what the best 
+Some general advice for fine tuning these parameters. [`atkThresh` and `relThresh`] Create a simple plot of generated envelope over the original data. This should provide usefull insight into where you shold set these values. [`panRatio` and `panThresh`] The panning values are derived from the number of samples shifted for each audio event normalized to a range of -100 to 100. 
 
 ### `calc_shift()`
 
