@@ -1,8 +1,8 @@
 # pyAudGrav
 
-pyAudGrav is a compositional tool, implemented in python, that allows a user to algorithmically edit and rearrange audio clips, both in time and space, using gravity as a metaphor. 
+pyAudGrav is a compositional tool, implemented in python, that allows a user to algorithmically edit and rearrange audio clips, both in time and space, using gravity. Gravity in this case is used as as a metaphor for the forces that independent sound objects impose on eachother. 
 
-After the audio file is read, the program will edit out each audio event and treat it as an independent sound object. A sound object (`AudioEvent()`) in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. The equation of gravity is used as a metaphor to describe the relationship between each audio event. Audio events, based on their mass and distance from other events, will excerpt an attraction. For our purposes, mass is equated as the RMS value of each event and the distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity, we would multiply the equation by the gravitational constant, 9.81 meters per seconds squared, but since audio has no gravitational constant this parameter is exposed to the user to affect the magnitude of shifting. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
+After the audio file is read, the program will edit out each audio event and treat it as an independent sound object. A sound object (`AudioEvent()`) in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. Implemented is Newton's universal law of gravity, where force due to gravity is equal to the product between two masses divided by their distance squared and then finally multiplied by a gravitaional constant. Audio events, based on their mass and distance from other events, will excerpt an attractive force on other objects. For our purposes, mass is equated as the RMS value of each event and the distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity, we would multiply the equation by the gravitational constant, 9.81 meters per seconds squared, but since audio has no gravitational constant this parameter is exposed to the user to affect the magnitude of shifting. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
 
 ## Installation
 
@@ -10,9 +10,9 @@ To install use...
 
 `pip install git+https://github.com/patrickTumulty/pyAudGrav`
 
-## Example Code
+## Getting Started 
 
-The package comes with several example audio files that can be quickly loaded via the following functions. 
+The package install comes with several example audio files that can be quickly loaded via the following functions. NOTE: `pyAudGrav` currently only supports the importing of mono files. After the initial analysis the new file can be exported as eather a stereo or mono file.  
 
 ```
 load_example1() # example1_stimmen.wav
@@ -28,20 +28,21 @@ following code.
 import pyAudGrav 
 import matplotlib.pyplot as plt
 
-io = pyAudGrav.load_example1()                       # pre packaged audio example
+io = pyAudGrav.load_example1()                                 # pre packaged audio example
 
-analyzer = pyAudGrav.AudioAnalysis(io.data, io.sample_rate)
+analyzer = pyAudGrav.AudioAnalysis(io.data, io.sample_rate)    # create an analyzer object 
 
-env = analyzer.get_end_peak(analyzer.data)           # generate envelope 
+env = analyzer.get_end_peak(analyzer.data)                     # generate envelope 
 
-analyzer.calc_shift(analyzer.data, env, gConst=4)    # calculate shift
+analyzer.calc_shift(analyzer.data, env, gConst=4)              # calculate gravity shifting
 
-rStruct = pyAudGrav.AudioReconstruct(len(analyzer.data), analyzer.audio_events)
+rStruct = pyAudGrav.AudioReconstruct(len(analyzer.data), 
+                                    analyzer.audio_events)     # create reconstruction object
 
-new_signal = rStruct.reconstruct_stereo()            # reconstruct signal
+new_signal = rStruct.reconstruct_stereo()                      # reconstruct stereo signal
 
-io.writeWav("Example1_before.wav)
-io.writeWav("Example1_after.wav", new_signal)
+io.writeWav("Example1_before.wav)                   # original
+io.writeWav("Example1_after.wav", new_signal)       # new audio file 
 
 # == Plot New Signal == 
 
@@ -62,7 +63,7 @@ plt.show()
 
 To use your own audio file simply change `io = pyAudGrav.load_example1()` with `io = pyAudGrav.AudioIO(/filePath)`. 
 
-pyAudGrav has a built in function called `loop_gravity()` that allows the user to iterate over the same data set multiple times. This approach yields interesting and different results to that of the example above.
+pyAudGrav has a built in function called `loop_gravity()` that allows the user to iterate over the same data set multiple times. This approach yields interesting and different results to that of the example above. The syntax for achieving this is similar to the previous example with a couple differences. In this example `loop_gravity()` is used in place of `calc_shift()`. In addition `loop_gravity()` will return the final iteration of the looped data. This means that there is no need to create a reconstruction object as is seen in the previous example. Note that `loop_gravity()` will deconstruct and reconstruct the data as a mono data array until the final iteration where it will become stereo. 
 
 ```
 import pyAudGrav
@@ -91,7 +92,9 @@ plt.show()
 # loop_gravity.py 
 ```
 
-The code above illustrates the minimum code required to create a new audio file. Examination of the `calc_shift()` and `loop_gravity()` functions will reveal some of the other parameters available to fine tune the pyAudGrav algorithm. 
+The code above illustrates the minimum code required to create a new audio file. Examination of the `calc_shift()` and `loop_gravity()` functions will reveal some of the other parameters available to fine tune the pyAudGrav algorithm. For best results the user is encouraged to experiment with these parameters.
+
+Some general advice for fine tuning these parameters. [`atkThresh` and `relThresh`] Create a simple plot of generated envelope over the original data. This should provide usefull insight into where you shold set these values. [`panRatio` and `panThresh`] The panning values are derived from the number of samples shifted for each audio event normalized to a range of -100 to 100. 
 
 ### `calc_shift()`
 
