@@ -4,6 +4,7 @@ from scipy import signal
 from pyAudGrav.AudioEvent import AudioEvent
 from pyAudGrav.AudioReconstruct import AudioReconstruct
 import pyloudnorm as pyln
+import math
 
 
 class AudioAnalysis:
@@ -358,6 +359,35 @@ class AudioAnalysis:
         b, a = signal.butter(filterOrder, filterCutoff,  fs=sample_rate)
         filtered = signal.filtfilt(b, a, rectified_sig, method='gust')
         return filtered
+
+    def get_env_peak2(self, signal, aR=0.005):
+        """
+        Return a smooth representation of the signals envelope based on attack and release times. 
+        The attack time is instantaneous to ensure the envelope captures peak of the envelope. The 
+        release time is adjustable. This causes the envelope to decay over time. This is meant to avoid 
+        rippling of the signal as the volume decays.
+
+        Paramters:
+
+        signal : 1D numpy array 
+            audio data
+
+        aR : float
+            Time in seconds that the envelope takes to release back to zero. (Default : 5 ms (0.005 s))
+        """
+        env = np.empty(len(signal))
+        b0Attack = 1.0
+        b0Release = 1.0 - math.exp(-1 / (aR * self.sample_rate))
+        output = 0.0
+        for n in range(len(signal)):
+            inputAbs = abs(signal[n])
+            if (inputAbs > output):
+                b0 = b0Attack
+            else:
+                b0 = b0Release
+            output += b0 * (inputAbs - output)
+            env[n] = output
+        return env
 
 
     def get_env_rms(self, data, window):
