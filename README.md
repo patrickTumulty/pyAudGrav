@@ -35,7 +35,7 @@ load_example3() # example3_potsPans.wav
 load_example4() # example4_pingPong.wav
 load_example5() # example5_hey.wav
 ```
-These files can also be downloaded directly from the github repository (/DOCUMENTATION/IncludedExamples). To use one of these examples you can use the 
+These files can also be downloaded directly from the github repository [/DOCUMENTATION/IncludedExamples]. To use one of these examples you can use the 
 following code. 
 
 ```python
@@ -75,7 +75,9 @@ plt.show()
 # calc_shift.py 
 ```
 
-To use your own audio file simply change `io = pyAudGrav.load_example1()` with `io = pyAudGrav.AudioIO(/filePath)`. 
+To use your own audio file simply swap...  
+
+`io = pyAudGrav.load_example1()` with `io = pyAudGrav.AudioIO("/filePath")`
 
 pyAudGrav has a built in function called `loop_gravity()` that allows the user to iterate over the same data set multiple times. This approach yields interesting and different results to that of the example above. The syntax for achieving this is similar to the previous example with a couple differences. In this example `loop_gravity()` is used in place of `calc_shift()`. In addition `loop_gravity()` will return the final iteration of the looped data. This means that there is no need to create a reconstruction object as is seen in the previous example. Note that `loop_gravity()` will deconstruct and reconstruct the data as a mono data array until the final iteration where it will become stereo. 
 
