@@ -7,9 +7,8 @@ pyAudGrav is a compositional tool, implemented in python, that allows a user to 
 
 After the audio file is read, the program will edit out each audio event and treat it as an independent sound object. An (`AudioEvent()`) in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. To approximate the behavior of gravity for these audio events we use Newton's universal law of gravity. The law describes that the force due to gravity is equal to the product between two masses divided by their distance squared and multiplied by a gravitational constant. Audio events, based on their mass and distance from other events, will excerpt an attractive force on other audio events. For our purposes, mass is equated as the RMS value of each event and the distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity, we would multiply the equation by the gravitational constant, 9.81 meters per seconds squared, but since audio has no gravitational constant this parameter is exposed to the user to affect the magnitude of shifting. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
 
-<center>
-![Newtons Law of Gravity](/DOCUMENTATION/images/NewtonsLaw.png=200x100)
-</center>
+![Newtons Law of Gravity](/DOCUMENTATION/images/NewtonsLaw2.png)
+
 
 ## Installation
 
