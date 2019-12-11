@@ -5,7 +5,7 @@ pyAudGrav is a compositional tool, implemented in python, that allows a user to 
 ![Simple Example (gConst = 2)](/DOCUMENTATION/images/stimmen_shift.png)
 *Note: This is a subtle shift example that is meant to illustrate the direction that audio events move in relationship to other events.*
 
-After the audio file is read, the program will edit out each audio event and treat it as an independent sound object. An (`AudioEvent()`) in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. To approximate the behavior of gravity for these audio events we use Newton's universal law of gravity. The law describes that the force due to gravity is equal to the product between two masses divided by their distance squared and multiplied by a gravitational constant. 
+After the audio file is read, the program will edit out each audio event and treat it as an independent sound object. An `AudioEvent()` in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. To approximate the behavior of gravity for these audio events we use Newton's universal law of gravity. The law describes that the force due to gravity is equal to the product between two masses divided by their distance squared and multiplied by a gravitational constant. 
 
 ![Newtons Law of Gravity](/DOCUMENTATION/images/NewtonsLaw2.png)
 
