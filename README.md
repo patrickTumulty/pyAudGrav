@@ -112,7 +112,7 @@ plt.show()
 
 The code above illustrates the minimum code required to create a new audio file. Examination of the `calc_shift()` and `loop_gravity()` functions will reveal some of the other parameters available to fine tune the pyAudGrav algorithm. For best results the user is encouraged to experiment with these parameters.
 
-For a more in depth overview and explanation of pyAudGrav and its classes, please refer to the DOCUMENTATION folder above. 
+**For a more in depth overview and explanation of pyAudGrav and its classes, please refer to the DOCUMENTATION folder above.** 
 
  
 
