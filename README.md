@@ -5,9 +5,13 @@ pyAudGrav is a compositional tool, implemented in python, that allows a user to 
 ![Simple Example (gConst = 2)](/DOCUMENTATION/images/stimmen_shift.png)
 *Note: This is a subtle shift example that is meant to illustrate the direction that audio events move in relationship to other events.*
 
-After the audio file is read, the program will edit out each audio event and treat it as an independent sound object. An (`AudioEvent()`) in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. To approximate the behavior of gravity for these audio events we use Newton's universal law of gravity. The law describes that the force due to gravity is equal to the product between two masses divided by their distance squared and multiplied by a gravitational constant. Audio events, based on their mass and distance from other events, will excerpt an attractive force on other audio events. For our purposes, mass is equated as the RMS value of each event and the distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity, we would multiply the equation by the gravitational constant, 9.81 meters per seconds squared, but since audio has no gravitational constant this parameter is exposed to the user to affect the magnitude of shifting. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
+After the audio file is read, the program will edit out each audio event and treat it as an independent sound object. An (`AudioEvent()`) in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. To approximate the behavior of gravity for these audio events we use Newton's universal law of gravity. The law describes that the force due to gravity is equal to the product between two masses divided by their distance squared and multiplied by a gravitational constant. 
 
 ![Newtons Law of Gravity](/DOCUMENTATION/images/NewtonsLaw2.png)
+
+Audio events, based on their mass and distance from other events, will excerpt an attractive force on other audio events. For our purposes, mass is equated as the RMS value of each event and the distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity, we would multiply the equation by the gravitational constant, 9.81 meters per seconds squared, but since audio has no gravitational constant this parameter is exposed to the user to affect the magnitude of shifting. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
+
+
 
 
 ## Installation
@@ -31,7 +35,7 @@ load_example3() # example3_potsPans.wav
 load_example4() # example4_pingPong.wav
 load_example5() # example5_hey.wav
 ```
-These files can also be downloaded directly from the github repository (/DOCUMENTATION/IncludedExamples). To use one of these examples you can use the 
+These files can also be downloaded directly from the github repository [/DOCUMENTATION/IncludedExamples]. To use one of these examples you can use the 
 following code. 
 
 ```python
@@ -71,7 +75,9 @@ plt.show()
 # calc_shift.py 
 ```
 
-To use your own audio file simply change `io = pyAudGrav.load_example1()` with `io = pyAudGrav.AudioIO(/filePath)`. 
+To use your own audio file simply swap...  
+
+`io = pyAudGrav.load_example1()` with `io = pyAudGrav.AudioIO("/filePath")`
 
 pyAudGrav has a built in function called `loop_gravity()` that allows the user to iterate over the same data set multiple times. This approach yields interesting and different results to that of the example above. The syntax for achieving this is similar to the previous example with a couple differences. In this example `loop_gravity()` is used in place of `calc_shift()`. In addition `loop_gravity()` will return the final iteration of the looped data. This means that there is no need to create a reconstruction object as is seen in the previous example. Note that `loop_gravity()` will deconstruct and reconstruct the data as a mono data array until the final iteration where it will become stereo. 
 
@@ -106,7 +112,7 @@ plt.show()
 
 The code above illustrates the minimum code required to create a new audio file. Examination of the `calc_shift()` and `loop_gravity()` functions will reveal some of the other parameters available to fine tune the pyAudGrav algorithm. For best results the user is encouraged to experiment with these parameters.
 
-For a more in depth overview and explanation of pyAudGrav and its classes, please refer to the DOCUMENTATION folder above. 
+**For a more in depth overview and explanation of pyAudGrav and its classes, please refer to the DOCUMENTATION folder above.** 
 
  
 
