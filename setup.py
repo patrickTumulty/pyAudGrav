@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyAudGrav",
-    version="0.1.0",
+    version="0.1.5",
     author="Patrick Tumulty",
     author_email="ptumulty1@gmail.com",
     description="Algorithmically edit and rearrange audio clips, both in time and space, using the equation of gravity.",
