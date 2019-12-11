@@ -20,7 +20,7 @@ To install use...
 
 `pip install pyAudGrav` 
 
-or
+For most update version use. 
 
 `pip install git+https://github.com/patrickTumulty/pyAudGrav`
 
