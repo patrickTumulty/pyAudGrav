@@ -473,8 +473,10 @@ class AudioAnalysis:
         return rS
 
     def simple_plot(self, array):
+        plt.ylim(-1, 1)
         plt.xlabel("Time (samples)")
         plt.ylabel("Amplitude")
         plt.plot(array)
         plt.show()
+
 
