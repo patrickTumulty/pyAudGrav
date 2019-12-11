@@ -2,10 +2,12 @@
 
 pyAudGrav is a compositional tool, implemented in python, that allows a user to algorithmically edit and rearrange audio clips, both in time and space, using gravity. Gravity, in this case, is metaphor used to describe the relationship between sound objects.
 
-![Simple Example (gConst = 2)](/DOCUMENTATION/pyplots/stimmen_shift.png)
+![Simple Example (gConst = 2)](/DOCUMENTATION/images/stimmen_shift.png)
 *Note: This is a subtle shift example that is meant to illustrate the direction that audio events move in relationship to other events.*
 
 After the audio file is read, the program will edit out each audio event and treat it as an independent sound object. An (`AudioEvent()`) in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. To approximate the behavior of gravity for these audio events we use Newton's universal law of gravity. The law describes that the force due to gravity is equal to the product between two masses divided by their distance squared and multiplied by a gravitational constant. Audio events, based on their mass and distance from other events, will excerpt an attractive force on other audio events. For our purposes, mass is equated as the RMS value of each event and the distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity, we would multiply the equation by the gravitational constant, 9.81 meters per seconds squared, but since audio has no gravitational constant this parameter is exposed to the user to affect the magnitude of shifting. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
+
+![Newtons Law of Gravity](/DOCUMENTATION/images/NewtonsLaw.pdf)
 
 ## Installation
 
@@ -99,7 +101,7 @@ plt.show()
 # loop_gravity.py 
 ```
 
-![Simple Gravity Example](/DOCUMENTATION/pyplots/stimmen_gravity.gif)
+![Simple Gravity Example](/DOCUMENTATION/images/stimmen_gravity.gif)
 
 The code above illustrates the minimum code required to create a new audio file. Examination of the `calc_shift()` and `loop_gravity()` functions will reveal some of the other parameters available to fine tune the pyAudGrav algorithm. For best results the user is encouraged to experiment with these parameters.
 
