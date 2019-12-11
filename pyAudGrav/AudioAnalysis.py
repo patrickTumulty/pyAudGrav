@@ -293,8 +293,10 @@ class AudioAnalysis:
             Threshold (0 <= val <= 100)
         """
         for i in range(len(panValues)):
-            if panValues[i] > thresh or panValues[i] < -thresh:
-                panValues[i] *= (1 / compRatio)
+            if panValues[i] > thresh:
+                panValues[i] = ((panValues[i] - thresh)/compRatio) + thresh
+            elif panValues[i] < -thresh:
+                panValues[i] = ((panValues[i] + thresh)/compRatio) - thresh
         return panValues
 
     def _apply_shift(self, shift_array):
