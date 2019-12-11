@@ -72,7 +72,6 @@ plt.plot([obj.peakIdx + obj.offset + rStruct.correction for obj in analyzer.audi
          '.b')
 plt.show()
 
-# calc_shift.py 
 ```
 
 To use your own audio file simply swap...  
@@ -105,7 +104,6 @@ plt.plot([item.peakIdx + item.offset + analyzer.rStruct.correction for item in a
          '.blue')
 plt.show()
 
-# loop_gravity.py 
 ```
 
 ![Simple Gravity Example](/DOCUMENTATION/images/stimmen_gravity.gif)
