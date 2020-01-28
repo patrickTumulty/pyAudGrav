@@ -3,7 +3,7 @@
 pyAudGrav is a compositional tool, implemented in python, that allows a user to algorithmically edit and rearrange audio clips, both in time and space, using gravity. Gravity, in this case, is metaphor used to describe the relationship between sound objects.
 
 ![Simple Example (gConst = 2)](/DOCUMENTATION/images/stimmen_shift.png)
-*Note: This is a subtle shift example that is meant to illustrate the direction that audio events move in relationship to other events.*
+
 
 After the audio file is read, the program will edit out each audio event and treat it as an independent sound object. An `AudioEvent()` in this case, is defined as a section of audio that is preceded and followed by the noise floor of the original sound file. To approximate the behavior of gravity for these audio events we use Newton's universal law of gravity. The law describes that the force due to gravity is equal to the product between two masses divided by their distance squared and multiplied by a gravitational constant. 
 
@@ -92,7 +92,7 @@ env = analyzer.get_env_peak(analyzer.data)
 
 new_signal = analyzer.loop_gravity(analyzer.data, env, numLoops=4, gConst=4, plot=False)
 
-io.writeWav("Example1_after.wav", r)
+io.writeWav("Example1_after.wav", new_signal)
 
 plt.plot([i + analyzer.rStruct.correction for i in range(len(analyzer.data))],
          [item for item in analyzer.data],
