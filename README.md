@@ -46,7 +46,7 @@ io = pyAudGrav.load_example1()                                 # pre packaged au
 
 analyzer = pyAudGrav.AudioAnalysis(io.data, io.sample_rate)    # create an analyzer object 
 
-env = analyzer.get_end_peak(analyzer.data)                     # generate envelope 
+env = analyzer.get_en_peak(analyzer.data)                     # generate envelope 
 
 analyzer.calc_shift(analyzer.data, env, gConst=4)              # calculate gravity shifting
 
