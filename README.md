@@ -55,7 +55,7 @@ rStruct = pyAudGrav.AudioReconstruct(len(analyzer.data),
 
 new_signal = rStruct.reconstruct_stereo()                      # reconstruct stereo signal
 
-io.writeWav("Example1_before.wav)                   # original
+io.writeWav("Example1_before.wav")                   # original
 io.writeWav("Example1_after.wav", new_signal)       # new audio file 
 
 # == Plot New Signal == 
