@@ -1,6 +1,6 @@
 # pyAudGrav
 
-pyAudGrav is a compositional tool, implemented in python, that allows a user to algorithmically edit and rearrange audio clips, both in time and space, using gravity. Gravity, in this case, is metaphor used to describe the relationship between sound objects.
+pyAudGrav allows a user to algorithmically edit and rearrange audio clips in time and space using Newton's universal law gravity. Gravity, in this case, is a metaphor used to describe the relationship between sound objects.
 
 ![Simple Example (gConst = 2)](/DOCUMENTATION/images/stimmen_shift.png)
 
@@ -9,7 +9,7 @@ After the audio file is read, the program will edit out each audio event and tre
 
 ![Newtons Law of Gravity](/DOCUMENTATION/images/NewtonsLaw2.png)
 
-Audio events, based on their mass and distance from other events, will excerpt an attractive force on other audio events. For our purposes, mass is equated as the RMS value of each event and the distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity, we would multiply the equation by the gravitational constant, 9.81 meters per seconds squared, but since audio has no gravitational constant this parameter is exposed to the user to affect the magnitude of shifting. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
+Audio events, based on their mass and distance from other events, will excerpt an attractive force on other audio events. For our purposes, mass is equated as the RMS value of each event. The distance is the time, in seconds squared, in between each events peak index. When actually calculating gravity we would use the  gravitational constant of 9.81 meters per seconds squared. Since audio has no gravitational constant this parameter is exposed to the user to affect the magnitude of shifting. The end result is a new audio file with events that have shifted in time and space (stereo panning) based on mass and distances. 
 
 
 
